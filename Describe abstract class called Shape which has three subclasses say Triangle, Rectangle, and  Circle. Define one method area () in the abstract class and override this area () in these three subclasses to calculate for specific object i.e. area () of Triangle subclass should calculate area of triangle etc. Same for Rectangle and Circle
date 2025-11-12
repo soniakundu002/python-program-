@@ -1,0 +1,32 @@
+
+
+abstract class Shape { 
+    abstract void area(); 
+}
+
+class Triangle extends Shape {
+    double b,h;
+    Triangle(double b,double h){this.b=b;this.h=h;}
+    void area(){System.out.println("Triangle Area: "+(0.5*b*h));}
+}
+
+class Rectangle extends Shape {
+    double l,w;
+    Rectangle(double l,double w){this.l=l;this.w=w;}
+    void area(){System.out.println("Rectangle Area: "+(l*w));}
+}
+
+class Circle extends Shape {
+    double r;
+    Circle(double r){this.r=r;}
+    void area(){System.out.println("Circle Area: "+(Math.PI*r*r));}
+}
+
+public class ShapeDemo {
+    public static void main(String[] args){
+        Shape s1=new Triangle(10,5);
+        Shape s2=new Rectangle(4,6);
+        Shape s3=new Circle(3);
+        s1.area(); s2.area(); s3.area();
+    }
+}
