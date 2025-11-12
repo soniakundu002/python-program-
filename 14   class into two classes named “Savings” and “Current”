@@ -1,0 +1,110 @@
+
+
+// Base class: Account
+class Account {
+    protected int accountNo;
+    protected double balance;
+
+    // Constructor
+    public Account(int accountNo, double balance) {
+        this.accountNo = accountNo;
+        this.balance = balance;
+    }
+
+    // Deposit money
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: " + amount);
+        } else {
+            System.out.println("Invalid deposit amount!");
+        }
+    }
+
+    // Withdraw money (general rule)
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount);
+        } else {
+            System.out.println("Insufficient balance or invalid amount!");
+        }
+    }
+
+    // Check balance
+    public void checkBalance() {
+        System.out.println("Account No: " + accountNo + " | Balance: " + balance);
+    }
+}
+
+// Derived class: Savings Account
+class Savings extends Account {
+    private double interestRate;
+
+    public Savings(int accountNo, double balance, double interestRate) {
+        super(accountNo, balance); // Call parent constructor
+        this.interestRate = interestRate;
+    }
+
+    // Add interest to balance
+    public void addInterest() {
+        double interest = balance * (interestRate / 100);
+        balance += interest;
+        System.out.println("Interest added: " + interest);
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        // Savings account cannot go negative
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn from Savings: " + amount);
+        } else {
+            System.out.println("Insufficient balance in Savings!");
+        }
+    }
+}
+
+// Derived class: Current Account
+class Current extends Account {
+    private double overdraftLimit;
+
+    public Current(int accountNo, double balance, double overdraftLimit) {
+        super(accountNo, balance);
+        this.overdraftLimit = overdraftLimit;
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        // Allow withdrawal within overdraft limit
+        if (amount > 0 && amount <= (balance + overdraftLimit)) {
+            balance -= amount;
+            System.out.println("Withdrawn from Current: " + amount);
+        } else {
+            System.out.println("Overdraft limit exceeded!");
+        }
+    }
+}
+
+// Main class to test functionality
+public class BankDemo {
+    public static void main(String[] args) {
+        // Create Savings Account
+        Savings s1 = new Savings(1001, 5000, 5.0);
+        s1.checkBalance();
+        s1.deposit(1000);
+        s1.addInterest();
+        s1.withdraw(2000);
+        s1.checkBalance();
+
+        System.out.println("---------------------------");
+
+        // Create Current Account
+        Current c1 = new Current(2001, 2000, 1000);
+        c1.checkBalance();
+        c1.deposit(500);
+        c1.withdraw(2500); // within overdraft limit
+        c1.withdraw(1000); // exceeds limit
+        c1.checkBalance();
+    }
+}
