@@ -1,0 +1,31 @@
+Write a program to demonstrate the use of  ‘this’ and ‘static’ keyword java code 
+
+class Student {
+    int rollNo;
+    String name;
+    static String college = "ABC College"; // static variable shared by all objects
+    Student(int rollNo, String name) {
+        this.rollNo = rollNo; // 'this' refers to current object
+        this.name = name;
+    }
+    void display() {
+        System.out.println("Roll No: " + this.rollNo + ", Name: " + this.name + ", College: " + college);
+    }
+    static void changeCollege(String newCollege) {
+        college = newCollege;
+    }
+}
+
+public class ThisStaticDemo {
+    public static void main(String[] args) {
+        Student s1 = new Student(1, "Alice");
+        Student s2 = new Student(2, "Bob");
+
+        s1.display();
+        s2.display();
+        Student.changeCollege("XYZ University");
+
+        s1.display();
+        s2.display();
+    }
+}
