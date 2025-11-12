@@ -1,17 +1,12 @@
 
 
-// Base class: Account
 class Account {
     protected int accountNo;
     protected double balance;
-
-    // Constructor
     public Account(int accountNo, double balance) {
         this.accountNo = accountNo;
         this.balance = balance;
     }
-
-    // Deposit money
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
@@ -20,8 +15,6 @@ class Account {
             System.out.println("Invalid deposit amount!");
         }
     }
-
-    // Withdraw money (general rule)
     public void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
@@ -30,14 +23,10 @@ class Account {
             System.out.println("Insufficient balance or invalid amount!");
         }
     }
-
-    // Check balance
     public void checkBalance() {
         System.out.println("Account No: " + accountNo + " | Balance: " + balance);
     }
 }
-
-// Derived class: Savings Account
 class Savings extends Account {
     private double interestRate;
 
@@ -45,8 +34,6 @@ class Savings extends Account {
         super(accountNo, balance); // Call parent constructor
         this.interestRate = interestRate;
     }
-
-    // Add interest to balance
     public void addInterest() {
         double interest = balance * (interestRate / 100);
         balance += interest;
@@ -64,8 +51,6 @@ class Savings extends Account {
         }
     }
 }
-
-// Derived class: Current Account
 class Current extends Account {
     private double overdraftLimit;
 
@@ -76,7 +61,6 @@ class Current extends Account {
 
     @Override
     public void withdraw(double amount) {
-        // Allow withdrawal within overdraft limit
         if (amount > 0 && amount <= (balance + overdraftLimit)) {
             balance -= amount;
             System.out.println("Withdrawn from Current: " + amount);
@@ -85,8 +69,6 @@ class Current extends Account {
         }
     }
 }
-
-// Main class to test functionality
 public class BankDemo {
     public static void main(String[] args) {
         // Create Savings Account
@@ -98,8 +80,6 @@ public class BankDemo {
         s1.checkBalance();
 
         System.out.println("---------------------------");
-
-        // Create Current Account
         Current c1 = new Current(2001, 2000, 1000);
         c1.checkBalance();
         c1.deposit(500);
